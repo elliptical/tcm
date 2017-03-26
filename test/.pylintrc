@@ -1,0 +1,11 @@
+[REPORTS]
+reports = no
+
+[MESSAGES CONTROL]
+disable = missing-docstring
+
+[BASIC]
+method-rgx = ([a-z_][a-z0-9_]{2,30}|test_[a-z0-9_]{1,50})$
+
+[FORMAT]
+max-line-length = 100
