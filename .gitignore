@@ -3,3 +3,6 @@ __pycache__/
 
 # Tox working directory.
 /.tox/
+
+# Pylint analysis data.
+/.pylint.d/
