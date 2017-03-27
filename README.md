@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/elliptical/tcm.svg?branch=develop)](https://travis-ci.org/elliptical/tcm)
+[![Coverage Status](https://coveralls.io/repos/github/elliptical/tcm/badge.svg?branch=develop)](https://coveralls.io/github/elliptical/tcm?branch=develop)
 
 # tcm (Test Case Meta)
 This is primarily an excercise in Python metaprogramming which also lets me see github and CI tools in action.
