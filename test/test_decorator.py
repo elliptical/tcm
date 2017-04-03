@@ -119,12 +119,23 @@ class DecoratorTestCase(unittest.TestCase):
 
         self.assertEqual(cm.exception.args[0], 'The object name must start with "test"')
 
-    def test_already_existing_attribute_will_raise(self):
+    def test_multiple_decorators_will_raise(self):
         with self.assertRaises(tcm.DecoratorException) as cm:
             @tcm.values()
             @tcm.values()
             def test():  # pylint: disable=unused-variable
                 pass  # pragma: no cover
+
+        self.assertEqual(cm.exception.args[0], 'Cannot decorate the same object more than once')
+
+    def test_already_existing_attribute_will_raise(self):
+        def test():
+            pass  # pragma: no cover
+
+        setattr(test, tcm.ATTR_NAME, None)
+
+        with self.assertRaises(tcm.DecoratorException) as cm:
+            test = tcm.values()(test)
 
         self.assertEqual(cm.exception.args[0], 'The object already has the "tcm values" attribute')
 

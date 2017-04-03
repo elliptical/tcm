@@ -1,6 +1,9 @@
 """This module provides a framework for generating test methods at runtime."""
 
 
+from collections import namedtuple
+
+
 ATTR_NAME = 'tcm values'
 TEST_METHOD_PREFIX = 'test'
 
@@ -19,7 +22,7 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
         if len(args) == 1 and callable(args[0]) and not kwargs:
             raise DecoratorException(
                 'Invalid use without parentheses or with a callable as the only argument')
-        self.__captured_arguments = (args, kwargs)
+        self.__captured_arguments = _CapturedArguments(args, kwargs)
 
     def __call__(self, func):
         """Store the captured arguments in the decorated object."""
@@ -28,7 +31,19 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
         if not func.__name__.startswith(TEST_METHOD_PREFIX):
             raise DecoratorException(
                 'The object name must start with "{}"'.format(TEST_METHOD_PREFIX))
-        if hasattr(func, ATTR_NAME):
-            raise DecoratorException('The object already has the "{}" attribute'.format(ATTR_NAME))
-        setattr(func, ATTR_NAME, self.__captured_arguments)
+
+        try:
+            attr = getattr(func, ATTR_NAME)
+        except AttributeError:
+            setattr(func, ATTR_NAME, self.__captured_arguments)
+        else:
+            if isinstance(attr, _CapturedArguments):
+                raise DecoratorException('Cannot decorate the same object more than once')
+            else:
+                raise DecoratorException(
+                    'The object already has the "{}" attribute'.format(ATTR_NAME))
+
         return func
+
+
+_CapturedArguments = namedtuple('CapturedArguments', 'args, kwargs')
