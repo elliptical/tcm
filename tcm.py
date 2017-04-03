@@ -28,5 +28,7 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
         if not func.__name__.startswith(TEST_METHOD_PREFIX):
             raise DecoratorException(
                 'The object name must start with "{}"'.format(TEST_METHOD_PREFIX))
+        if hasattr(func, ATTR_NAME):
+            raise DecoratorException('The object already has the "{}" attribute'.format(ATTR_NAME))
         setattr(func, ATTR_NAME, self.__captured_arguments)
         return func
