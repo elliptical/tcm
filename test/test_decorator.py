@@ -102,6 +102,15 @@ class DecoratorTestCase(unittest.TestCase):
         self.assertTupleEqual(args, ('abc', 12))
         self.assertDictEqual(kwargs, {'kw': None})
 
+    def test_noncallable_object_will_raise(self):
+        with self.assertRaises(tcm.DecoratorException) as cm:
+            @tcm.values()
+            @_zilch
+            def test():  # pylint: disable=unused-variable
+                pass  # pragma: no cover
+
+        self.assertEqual(cm.exception.args[0], 'The object must be callable')
+
 
 def _zilch(dummy):
     return None

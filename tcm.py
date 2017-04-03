@@ -22,5 +22,7 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
 
     def __call__(self, func):
         """Store the captured arguments in the decorated object."""
+        if not callable(func):
+            raise DecoratorException('The object must be callable')
         setattr(func, ATTR_NAME, self.__captured_arguments)
         return func
