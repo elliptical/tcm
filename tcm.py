@@ -2,6 +2,7 @@
 
 
 ATTR_NAME = 'tcm values'
+TEST_METHOD_PREFIX = 'test'
 
 
 class DecoratorException(Exception):
@@ -24,5 +25,8 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
         """Store the captured arguments in the decorated object."""
         if not callable(func):
             raise DecoratorException('The object must be callable')
+        if not func.__name__.startswith(TEST_METHOD_PREFIX):
+            raise DecoratorException(
+                'The object name must start with "{}"'.format(TEST_METHOD_PREFIX))
         setattr(func, ATTR_NAME, self.__captured_arguments)
         return func

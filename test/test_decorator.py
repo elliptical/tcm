@@ -111,6 +111,14 @@ class DecoratorTestCase(unittest.TestCase):
 
         self.assertEqual(cm.exception.args[0], 'The object must be callable')
 
+    def test_unexpected_name_prefix_will_raise(self):
+        with self.assertRaises(tcm.DecoratorException) as cm:
+            @tcm.values()
+            def func():  # pylint: disable=unused-variable
+                pass  # pragma: no cover
+
+        self.assertEqual(cm.exception.args[0], 'The object name must start with "test"')
+
 
 def _zilch(dummy):
     return None
