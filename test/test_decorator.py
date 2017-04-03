@@ -20,14 +20,14 @@ class DecoratorTestCase(unittest.TestCase):
         def test():
             pass  # pragma: no cover
 
-        self.assertFalse(hasattr(test, tcm.ATTR_NAME))
-        self.assertEqual(test.__name__, '_decorator')
+        self.assertIsInstance(test, tcm.values)
 
     def test_missing_arguments_are_stored(self):
         @tcm.values()
         def test():
             pass  # pragma: no cover
 
+        self.assertNotIsInstance(test, tcm.values)
         args, kwargs = getattr(test, tcm.ATTR_NAME)
         self.assertTupleEqual(args, ())
         self.assertDictEqual(kwargs, {})
@@ -37,6 +37,7 @@ class DecoratorTestCase(unittest.TestCase):
         def test():
             pass  # pragma: no cover
 
+        self.assertNotIsInstance(test, tcm.values)
         args, kwargs = getattr(test, tcm.ATTR_NAME)
         self.assertTupleEqual(args, ('abc',))
         self.assertDictEqual(kwargs, {})
@@ -56,6 +57,7 @@ class DecoratorTestCase(unittest.TestCase):
         def test():
             pass  # pragma: no cover
 
+        self.assertNotIsInstance(test, tcm.values)
         args, kwargs = getattr(test, tcm.ATTR_NAME)
         self.assertTupleEqual(args, (_dummy_callable, 12))
         self.assertDictEqual(kwargs, {})
@@ -65,6 +67,7 @@ class DecoratorTestCase(unittest.TestCase):
         def test():
             pass  # pragma: no cover
 
+        self.assertNotIsInstance(test, tcm.values)
         args, kwargs = getattr(test, tcm.ATTR_NAME)
         self.assertTupleEqual(args, (_dummy_callable,))
         self.assertDictEqual(kwargs, {'kw': None})
@@ -74,6 +77,7 @@ class DecoratorTestCase(unittest.TestCase):
         def test():
             pass  # pragma: no cover
 
+        self.assertNotIsInstance(test, tcm.values)
         args, kwargs = getattr(test, tcm.ATTR_NAME)
         self.assertTupleEqual(args, ())
         self.assertDictEqual(kwargs, {'kw': None})
@@ -83,6 +87,7 @@ class DecoratorTestCase(unittest.TestCase):
         def test():
             pass  # pragma: no cover
 
+        self.assertNotIsInstance(test, tcm.values)
         args, kwargs = getattr(test, tcm.ATTR_NAME)
         self.assertTupleEqual(args, ())
         self.assertDictEqual(kwargs, {'kw': _dummy_callable})
@@ -92,6 +97,7 @@ class DecoratorTestCase(unittest.TestCase):
         def test():
             pass  # pragma: no cover
 
+        self.assertNotIsInstance(test, tcm.values)
         args, kwargs = getattr(test, tcm.ATTR_NAME)
         self.assertTupleEqual(args, ('abc', 12))
         self.assertDictEqual(kwargs, {'kw': None})

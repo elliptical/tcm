@@ -10,14 +10,17 @@ class DecoratorException(Exception):
     pass
 
 
-def values(*args, **kwargs):
-    """Create a parameterized decorator which stores its arguments in the decorated object."""
-    if len(args) == 1 and callable(args[0]) and not kwargs:
-        raise DecoratorException(
-            'Invalid use without parentheses or with a callable as the only argument')
+class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-methods
+    """Parameterized decorator which stores its arguments in the decorated object."""
 
-    def _decorator(func):
-        setattr(func, ATTR_NAME, (args, kwargs))
+    def __init__(self, *args, **kwargs):
+        """Capture the decorator arguments."""
+        if len(args) == 1 and callable(args[0]) and not kwargs:
+            raise DecoratorException(
+                'Invalid use without parentheses or with a callable as the only argument')
+        self.__captured_arguments = (args, kwargs)
+
+    def __call__(self, func):
+        """Store the captured arguments in the decorated object."""
+        setattr(func, ATTR_NAME, self.__captured_arguments)
         return func
-
-    return _decorator
