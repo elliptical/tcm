@@ -34,6 +34,12 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertFalse(hasattr(GeneratedTestCase, 'test_few'))
         self.assertFalse(hasattr(GeneratedTestCase, 'test_many'))
 
+        self.assertFalse(hasattr(GeneratedTestCase.test_few_1, tcm.ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_few_9, tcm.ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_few_kw, tcm.ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_many_01, tcm.ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_many_10, tcm.ATTR_NAME))
+
         self.assertEqual(GeneratedTestCase.test_few_1.__name__, 'test_few_1')
         self.assertEqual(GeneratedTestCase.test_few_9.__name__, 'test_few_9')
         self.assertEqual(GeneratedTestCase.test_few_kw.__name__, 'test_few_kw')

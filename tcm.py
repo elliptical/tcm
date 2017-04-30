@@ -63,7 +63,7 @@ def _expanded_mapping(mapping):
     """Iterate the mapping while generating new test methods from decorated ones."""
     for key, value in mapping.items():
         try:
-            captured_arguments = _get_captured_arguments(value)
+            captured_arguments = _extract_captured_arguments(value)
         except AttributeError:
             # Pass non-decorated items unchanged.
             yield key, value
@@ -76,12 +76,13 @@ def _expanded_mapping(mapping):
                 yield generated.__name__, generated
 
 
-def _get_captured_arguments(func):
+def _extract_captured_arguments(func):
     """Raise AttributeError for non-decorated "func", return the captured arguments otherwise."""
     captured_arguments = getattr(func, ATTR_NAME)
     if type(captured_arguments) is not _CapturedArguments:  # pylint: disable=unidiomatic-typecheck
         # The attribute was not set by tcm, so effectively it does not exist.
         raise AttributeError
+    delattr(func, ATTR_NAME)
     return captured_arguments
 
 
