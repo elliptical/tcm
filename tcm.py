@@ -2,6 +2,7 @@
 
 
 from collections import namedtuple
+from collections import OrderedDict
 import functools
 
 
@@ -52,6 +53,13 @@ _CapturedArguments = namedtuple('CapturedArguments', 'args, kwargs')
 
 class TestCaseMeta(type):
     """Metaclass based runtime generator of the test methods."""
+
+    @classmethod
+    def __prepare__(mcs, name, bases, **kwargs):  # noqa: N804 pylint: disable=unused-argument
+        """Use ordered mapping for the namespace regardless of the Python version."""
+        # Note: absent the __prepare__() method, Python 3.6 would use an ordered
+        # mapping while prior versions would stick with a regular dict().
+        return OrderedDict()
 
     def __new__(mcs, name, bases, mapping):  # noqa: N804
         """Create the class after expanding the original mapping."""
