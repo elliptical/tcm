@@ -23,6 +23,7 @@ class MetaclassTestCase(unittest.TestCase):
         class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
             @tcm.values(*range(9), kw=-1)
             def test_few(self, value):
+                """Dummy docstring."""
                 self.assertIsInstance(value, int)
                 return value
 
@@ -39,6 +40,9 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertFalse(hasattr(GeneratedTestCase.test_few_kw, tcm.ATTR_NAME))
         self.assertFalse(hasattr(GeneratedTestCase.test_many_01, tcm.ATTR_NAME))
         self.assertFalse(hasattr(GeneratedTestCase.test_many_10, tcm.ATTR_NAME))
+
+        self.assertEqual(GeneratedTestCase.test_few_2.__doc__, 'Dummy docstring.')
+        self.assertIsNone(GeneratedTestCase.test_many_01.__doc__)
 
         self.assertEqual(GeneratedTestCase.test_few_1.__name__, 'test_few_1')
         self.assertEqual(GeneratedTestCase.test_few_9.__name__, 'test_few_9')
