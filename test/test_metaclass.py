@@ -1,3 +1,4 @@
+import inspect
 import unittest
 
 import tcm
@@ -92,5 +93,11 @@ class MetaclassTestCase(unittest.TestCase):
                 def test_1(self):
                     pass  # pragma: no cover
 
-        self.assertEqual(cm.exception.args[0], 'Duplicate "test_1" attribute at lines 88 and 92')
-        self.assertSetEqual(set(locals()), {'self', 'cm'})  # _SpoiledTestCase not created
+        _source, base = inspect.getsourcelines(
+            MetaclassTestCase.test_duplicate_test_method_name_will_raise)
+        self.assertEqual(
+            cm.exception.args[0],
+            'Duplicate "test_1" attribute at lines {} and {}'.format(base + 3, base + 7))
+
+        # Make sure _SpoiledTestCase does not exist.
+        self.assertSetEqual(set(locals()), {'self', 'cm', '_source', 'base'})
