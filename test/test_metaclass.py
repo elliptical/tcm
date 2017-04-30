@@ -81,3 +81,16 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertEqual(
             cm.exception.args[0],
             'test_extra() takes 1 positional argument but 2 were given')
+
+    def test_duplicate_test_method_name_will_raise(self):
+        with self.assertRaises(tcm.MetaclassException) as cm:
+            class _SpoiledTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+                @tcm.values('abc')
+                def test(self, value):
+                    pass  # pragma: no cover
+
+                def test_1(self):
+                    pass  # pragma: no cover
+
+        self.assertEqual(cm.exception.args[0], 'The "test_1" attribute already exists')
+        self.assertSetEqual(set(locals()), {'self', 'cm'})  # _SpoiledTestCase not created

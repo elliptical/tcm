@@ -51,6 +51,12 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
 _CapturedArguments = namedtuple('CapturedArguments', 'args, kwargs')
 
 
+class MetaclassException(Exception):
+    """Exception raised on duplicate test method names."""
+
+    pass
+
+
 class TestCaseMeta(type):
     """Metaclass based runtime generator of the test methods."""
 
@@ -63,7 +69,11 @@ class TestCaseMeta(type):
 
     def __new__(mcs, name, bases, mapping):  # noqa: N804
         """Create the class after expanding the original mapping."""
-        new_mapping = dict(_expanded_mapping(mapping))
+        new_mapping = dict()
+        for key, value in _expanded_mapping(mapping):
+            if key in new_mapping:
+                raise MetaclassException('The "{}" attribute already exists'.format(key))
+            new_mapping[key] = value
         return super().__new__(mcs, name, bases, new_mapping)
 
 
