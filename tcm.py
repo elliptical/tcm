@@ -4,6 +4,7 @@
 from collections import namedtuple
 from collections import OrderedDict
 import functools
+import inspect
 
 
 ATTR_NAME = 'tcm values'
@@ -72,7 +73,10 @@ class TestCaseMeta(type):
         new_mapping = dict()
         for key, value in _expanded_mapping(mapping):
             if key in new_mapping:
-                raise MetaclassException('The "{}" attribute already exists'.format(key))
+                existing = _get_starting_line_number(new_mapping[key])
+                current = _get_starting_line_number(value)
+                raise MetaclassException(
+                    'Duplicate "{}" attribute at lines {} and {}'.format(key, existing, current))
             new_mapping[key] = value
         return super().__new__(mcs, name, bases, new_mapping)
 
@@ -126,3 +130,13 @@ def _generate_test_method(func, arg):
         return func(self, arg)
 
     return _wrapper
+
+
+def _get_starting_line_number(func):
+    """Return the starting line number of the test method definition."""
+    # Python 3.4 version of getsourcelines() will return the source of the
+    # wrapper instead of the wrapped, so we unwrap it first (this is what
+    # Python 3.5 and higher do).
+    func = inspect.unwrap(func)
+    _, start_line_number = inspect.getsourcelines(func)
+    return start_line_number

@@ -92,5 +92,5 @@ class MetaclassTestCase(unittest.TestCase):
                 def test_1(self):
                     pass  # pragma: no cover
 
-        self.assertEqual(cm.exception.args[0], 'The "test_1" attribute already exists')
+        self.assertEqual(cm.exception.args[0], 'Duplicate "test_1" attribute at lines 88 and 92')
         self.assertSetEqual(set(locals()), {'self', 'cm'})  # _SpoiledTestCase not created
