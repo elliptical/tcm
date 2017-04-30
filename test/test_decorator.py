@@ -140,7 +140,7 @@ class DecoratorTestCase(unittest.TestCase):
         self.assertEqual(cm.exception.args[0], 'The object already has the "tcm values" attribute')
 
 
-def _zilch(dummy):
+def _zilch(_func):
     return None
 
 
