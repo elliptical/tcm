@@ -8,7 +8,7 @@ class MetaclassTestCase(unittest.TestCase):
     # pylint: disable=no-member
 
     def test_nondecorated_test_methods_keep_their_names(self):
-        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+        class GeneratedTestCase(tcm.TestCase):
             def test_no_attr(self):
                 pass  # pragma: no cover
 
@@ -21,7 +21,7 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertTrue(hasattr(GeneratedTestCase.test_user_attr, tcm.ATTR_NAME))
 
     def test_decorated_test_methods_are_replaced_with_generated_ones(self):
-        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+        class GeneratedTestCase(tcm.TestCase):
             @tcm.values(*range(9), kw=-1)
             def test_few(self, value):
                 """Dummy docstring."""
@@ -60,7 +60,7 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertEqual(gtc.test_many_10(), 9)
 
     def test_values_are_passed_as_is_for_single_arg_test_method(self):
-        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+        class GeneratedTestCase(tcm.TestCase):
             @tcm.values(
                 tuple(),
                 list(),
@@ -77,7 +77,7 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertDictEqual(gtc.test_3(), {})
 
     def test_values_are_unpacked_for_pos_args_test_method(self):
-        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+        class GeneratedTestCase(tcm.TestCase):
             @tcm.values(
                 ('a', 1),
                 ['bb', 2],
@@ -95,7 +95,7 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertTupleEqual(gtc.test_3(), ('ccc', 3))
 
     def test_values_are_unpacked_for_star_args_test_method(self):
-        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+        class GeneratedTestCase(tcm.TestCase):
             @tcm.values(
                 ('a',),
                 ['bb', 2],
@@ -112,7 +112,7 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertTupleEqual(gtc.test_3(), ('ccc', 3, None))
 
     def test_values_are_unpacked_for_keyword_args_test_method(self):
-        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+        class GeneratedTestCase(tcm.TestCase):
             @tcm.values(
                 {'x': 'a', 'y': 1, 'z': 0},
                 {'x': 'bb', 'y': 2},
@@ -130,7 +130,7 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertTupleEqual(gtc.test_2(), ('bb', 2, '?'))
 
     def test_incompatible_test_method_signature_will_raise_upon_test_run(self):
-        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+        class GeneratedTestCase(tcm.TestCase):
             # Each tcm.values item must be a list, a tuple, or a dict because
             # the test method takes two arguments (not a single test argument).
             @tcm.values(
@@ -163,7 +163,7 @@ class MetaclassTestCase(unittest.TestCase):
 
     def test_incompatible_test_arg_type_will_raise(self):
         with self.assertRaises(tcm.MetaclassException) as cm:
-            class _SpoiledTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+            class _SpoiledTestCase(tcm.TestCase):
                 @tcm.values(
                     ('a', 1),
                     2,
@@ -178,7 +178,7 @@ class MetaclassTestCase(unittest.TestCase):
 
     def test_duplicate_test_method_name_will_raise(self):
         with self.assertRaises(tcm.MetaclassException) as cm:
-            class _SpoiledTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+            class _SpoiledTestCase(tcm.TestCase):
                 @tcm.values('abc')
                 def test(self, value):
                     pass  # pragma: no cover

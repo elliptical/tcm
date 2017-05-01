@@ -5,6 +5,7 @@ from collections import namedtuple
 from collections import OrderedDict
 import functools
 import inspect
+import unittest
 
 
 ATTR_NAME = 'tcm values'
@@ -160,3 +161,9 @@ def _get_starting_line_number(func):
     func = inspect.unwrap(func)
     _, start_line_number = inspect.getsourcelines(func)
     return start_line_number
+
+
+class TestCase(unittest.TestCase, metaclass=TestCaseMeta):
+    """Base class to automatically employ the TestCaseMeta metaclass."""
+
+    pass
