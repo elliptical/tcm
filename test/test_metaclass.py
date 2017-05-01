@@ -59,13 +59,91 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertEqual(gtc.test_many_01(), 0)
         self.assertEqual(gtc.test_many_10(), 9)
 
+    def test_values_are_passed_as_is_for_single_arg_test_method(self):
+        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+            @tcm.values(
+                tuple(),
+                list(),
+                dict(),
+            )
+            def test(self, x):
+                self.assertIsInstance(x, (tuple, list, dict))
+                return x
+
+        gtc = GeneratedTestCase()
+
+        self.assertTupleEqual(gtc.test_1(), ())
+        self.assertListEqual(gtc.test_2(), [])
+        self.assertDictEqual(gtc.test_3(), {})
+
+    def test_values_are_unpacked_for_pos_args_test_method(self):
+        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+            @tcm.values(
+                ('a', 1),
+                ['bb', 2],
+                {'x': 'ccc', 'y': 3},
+            )
+            def test(self, x, y):
+                self.assertIsInstance(x, str)
+                self.assertIsInstance(y, int)
+                return x, y
+
+        gtc = GeneratedTestCase()
+
+        self.assertTupleEqual(gtc.test_1(), ('a', 1))
+        self.assertTupleEqual(gtc.test_2(), ('bb', 2))
+        self.assertTupleEqual(gtc.test_3(), ('ccc', 3))
+
+    def test_values_are_unpacked_for_star_args_test_method(self):
+        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+            @tcm.values(
+                ('a',),
+                ['bb', 2],
+                ('ccc', 3, None),
+            )
+            def test(self, *args):
+                self.assertIsInstance(args[0], str)
+                return args
+
+        gtc = GeneratedTestCase()
+
+        self.assertTupleEqual(gtc.test_1(), ('a',))
+        self.assertTupleEqual(gtc.test_2(), ('bb', 2))
+        self.assertTupleEqual(gtc.test_3(), ('ccc', 3, None))
+
+    def test_values_are_unpacked_for_keyword_args_test_method(self):
+        class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+            @tcm.values(
+                {'x': 'a', 'y': 1, 'z': 0},
+                {'x': 'bb', 'y': 2},
+            )
+            def test(self, z='?', **kwargs):
+                x = kwargs['x']
+                y = kwargs['y']
+                self.assertIsInstance(x, str)
+                self.assertIsInstance(y, int)
+                return x, y, z
+
+        gtc = GeneratedTestCase()
+
+        self.assertTupleEqual(gtc.test_1(), ('a', 1, 0))
+        self.assertTupleEqual(gtc.test_2(), ('bb', 2, '?'))
+
     def test_incompatible_test_method_signature_will_raise_upon_test_run(self):
         class GeneratedTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
-            @tcm.values('abc')
+            # Each tcm.values item must be a list, a tuple, or a dict because
+            # the test method takes two arguments (not a single test argument).
+            @tcm.values(
+                ['abc'],
+            )
             def test_missing(self, x, y):
                 pass  # pragma: no cover
 
-            @tcm.values('abc')
+            # Each tcm.values item must be a list, a tuple, or a dict because
+            # the test method takes no arguments (not a single test argument).
+            @tcm.values(
+                ['abc'],
+            )
             def test_extra(self):
                 pass  # pragma: no cover
 
@@ -82,6 +160,21 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertEqual(
             cm.exception.args[0],
             'test_extra() takes 1 positional argument but 2 were given')
+
+    def test_incompatible_test_arg_type_will_raise(self):
+        with self.assertRaises(tcm.MetaclassException) as cm:
+            class _SpoiledTestCase(unittest.TestCase, metaclass=tcm.TestCaseMeta):
+                @tcm.values(
+                    ('a', 1),
+                    2,
+                )
+                def test(self, x, y):
+                    pass    # pragma: no cover
+
+        self.assertEqual(cm.exception.args[0], 'Invalid test arg: 2')
+
+        # Make sure _SpoiledTestCase does not exist.
+        self.assertSetEqual(set(locals()), {'self', 'cm'})
 
     def test_duplicate_test_method_name_will_raise(self):
         with self.assertRaises(tcm.MetaclassException) as cm:

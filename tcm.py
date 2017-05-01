@@ -53,7 +53,7 @@ _CapturedArguments = namedtuple('CapturedArguments', 'args, kwargs')
 
 
 class MetaclassException(Exception):
-    """Exception raised on duplicate test method names."""
+    """Exception raised on errors when generating test methods."""
 
     pass
 
@@ -92,8 +92,9 @@ def _expanded_mapping(mapping):
         else:
             # Use the decorated test method as a sample and generate a distinct
             # test method for every captured argument.
+            as_is = _has_single_test_param(value)
             for suffix, arg in _uniformly_named_arguments(captured_arguments):
-                generated = _generate_test_method(value, arg)
+                generated = _generate_test_method(value, arg, as_is)
                 generated.__name__ = key + '_' + suffix
                 yield generated.__name__, generated
 
@@ -106,6 +107,15 @@ def _extract_captured_arguments(func):
         raise AttributeError
     delattr(func, ATTR_NAME)
     return captured_arguments
+
+
+def _has_single_test_param(func):
+    sig = inspect.signature(func)
+    params = sig.parameters
+    if len(params) != 2:
+        return False
+    _, test_param = params.values()
+    return test_param.kind == test_param.POSITIONAL_OR_KEYWORD
 
 
 def _uniformly_named_arguments(captured_arguments):
@@ -123,11 +133,21 @@ def _uniformly_named_arguments(captured_arguments):
     yield from kwargs.items()
 
 
-def _generate_test_method(func, arg):
-    """Wrap the original test method by supplying the "arg" as a positional argument."""
-    @functools.wraps(func)
-    def _wrapper(self):
-        return func(self, arg)
+def _generate_test_method(func, arg, as_is):
+    """Wrap the original test method by supplying the (possibly unpacked) "arg"."""
+    if as_is:
+        def _wrapper(self):
+            return func(self, arg)
+    elif isinstance(arg, (tuple, list)):
+        def _wrapper(self):
+            return func(self, *arg)
+    elif isinstance(arg, dict):
+        def _wrapper(self):
+            return func(self, **arg)
+    else:
+        raise MetaclassException('Invalid test arg: {!r}'.format(arg))
+
+    functools.update_wrapper(_wrapper, func)
 
     return _wrapper
 
