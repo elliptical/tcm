@@ -5,7 +5,7 @@ reports = no
 disable = missing-docstring,locally-disabled
 
 [BASIC]
-good-names=cm
+good-names=x,y,z,cm
 method-rgx = ([a-z_][a-z0-9_]{2,30}|test_[a-z0-9_]{1,70})$
 
 [FORMAT]
