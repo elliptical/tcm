@@ -12,6 +12,7 @@ from setuptools import setup
 
 
 PACKAGE_NAME = 'tcm'
+BADGE_LINE = '|version| |license| |Build Status| |Coverage Status|\n\n'
 
 
 if sys.version_info < (3, 4):
@@ -22,7 +23,8 @@ def get_readme():
     """Return the contents of the package's README.rst file."""
     with open('README.rst') as readme_file:
         text = readme_file.read()
-    return text
+    assert text.startswith(BADGE_LINE)
+    return text[len(BADGE_LINE):]
 
 
 def get_version():
