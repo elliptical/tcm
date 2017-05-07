@@ -5,8 +5,7 @@ from collections import OrderedDict
 import functools
 import inspect
 
-from .decorator import _CapturedArguments
-from .decorator import ATTR_NAME
+from .decorator import extract_captured_arguments
 
 
 class MetaclassException(Exception):
@@ -42,7 +41,7 @@ def _expanded_mapping(mapping):
     """Iterate the mapping while generating new test methods from decorated ones."""
     for key, value in mapping.items():
         try:
-            captured_arguments = _extract_captured_arguments(value)
+            captured_arguments = extract_captured_arguments(value)
         except AttributeError:
             # Pass non-decorated items unchanged.
             yield key, value
@@ -54,16 +53,6 @@ def _expanded_mapping(mapping):
                 generated = _generate_test_method(value, arg, as_is)
                 generated.__name__ = key + '_' + suffix
                 yield generated.__name__, generated
-
-
-def _extract_captured_arguments(func):
-    """Raise AttributeError for non-decorated "func", return the captured arguments otherwise."""
-    captured_arguments = getattr(func, ATTR_NAME)
-    if type(captured_arguments) is not _CapturedArguments:  # pylint: disable=unidiomatic-typecheck
-        # The attribute was not set by tcm, so effectively it does not exist.
-        raise AttributeError
-    delattr(func, ATTR_NAME)
-    return captured_arguments
 
 
 def _has_single_test_param(func):

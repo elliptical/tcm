@@ -46,4 +46,14 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
         return func
 
 
+def extract_captured_arguments(func):
+    """Raise AttributeError for non-decorated "func", return the captured arguments otherwise."""
+    captured_arguments = getattr(func, ATTR_NAME)
+    if type(captured_arguments) is not _CapturedArguments:  # pylint: disable=unidiomatic-typecheck
+        # The attribute was not set by tcm, so effectively it does not exist.
+        raise AttributeError
+    delattr(func, ATTR_NAME)
+    return captured_arguments
+
+
 _CapturedArguments = namedtuple('CapturedArguments', 'args, kwargs')
