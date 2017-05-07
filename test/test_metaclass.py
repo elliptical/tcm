@@ -2,6 +2,7 @@ import inspect
 import unittest
 
 import tcm
+from tcm.decorator import ATTR_NAME
 
 
 class MetaclassTestCase(unittest.TestCase):
@@ -15,10 +16,10 @@ class MetaclassTestCase(unittest.TestCase):
             def test_user_attr(self):
                 pass  # pragma: no cover
 
-            setattr(test_user_attr, tcm.ATTR_NAME, None)
+            setattr(test_user_attr, ATTR_NAME, None)
 
-        self.assertFalse(hasattr(GeneratedTestCase.test_no_attr, tcm.ATTR_NAME))
-        self.assertTrue(hasattr(GeneratedTestCase.test_user_attr, tcm.ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_no_attr, ATTR_NAME))
+        self.assertTrue(hasattr(GeneratedTestCase.test_user_attr, ATTR_NAME))
 
     def test_decorated_test_methods_are_replaced_with_generated_ones(self):
         class GeneratedTestCase(tcm.TestCase):
@@ -36,11 +37,11 @@ class MetaclassTestCase(unittest.TestCase):
         self.assertFalse(hasattr(GeneratedTestCase, 'test_few'))
         self.assertFalse(hasattr(GeneratedTestCase, 'test_many'))
 
-        self.assertFalse(hasattr(GeneratedTestCase.test_few_1, tcm.ATTR_NAME))
-        self.assertFalse(hasattr(GeneratedTestCase.test_few_9, tcm.ATTR_NAME))
-        self.assertFalse(hasattr(GeneratedTestCase.test_few_kw, tcm.ATTR_NAME))
-        self.assertFalse(hasattr(GeneratedTestCase.test_many_01, tcm.ATTR_NAME))
-        self.assertFalse(hasattr(GeneratedTestCase.test_many_10, tcm.ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_few_1, ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_few_9, ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_few_kw, ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_many_01, ATTR_NAME))
+        self.assertFalse(hasattr(GeneratedTestCase.test_many_10, ATTR_NAME))
 
         self.assertEqual(GeneratedTestCase.test_few_2.__doc__, 'Dummy docstring.')
         self.assertIsNone(GeneratedTestCase.test_many_01.__doc__)

@@ -10,3 +10,9 @@ __pycache__/
 # Coverage reports and collected data.
 /htmlcov/
 /.coverage
+
+# Distribution related files and directories.
+/build/
+/dist/
+/*.egg-info/
+/README.rst

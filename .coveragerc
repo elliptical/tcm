@@ -1,8 +1,9 @@
 [run]
 branch = True
-source = .
-omit = .tox/*
+source =
+    tcm
+    test
 
 [report]
 show_missing = True
-skip_covered = True
+skip_covered = False
