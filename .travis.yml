@@ -1,0 +1,21 @@
+language: python
+
+addons:
+  apt:
+    sources:
+    - deadsnakes
+    packages:
+    - python3.5
+
+python:
+- 3.6
+
+install:
+- pip install tox
+- pip install coveralls
+
+script:
+- tox
+
+after_success:
+- coveralls

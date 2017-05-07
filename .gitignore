@@ -1,0 +1,17 @@
+# Python 3 cache.
+__pycache__/
+
+# Tox working directory.
+/.tox/
+
+# Pylint analysis data.
+/.pylint.d/
+
+# Coverage reports and collected data.
+/htmlcov/
+/.coverage
+
+# Distribution related directories.
+/build/
+/dist/
+/*.egg-info/
