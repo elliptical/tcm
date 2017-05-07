@@ -37,16 +37,20 @@ def get_version():
     return version_match.group(1)
 
 
+VERSION = get_version()
+
+
 setup(
     name=PACKAGE_NAME,
     author='Andrei Boulgakov',
     author_email='andrei.boulgakov@outlook.com',
     url='https://github.com/elliptical/tcm',
+    download_url='https://github.com/elliptical/tcm/archive/%s.tar.gz' % VERSION,
     license='MIT',
     platforms='All',
     description='Metaclass based runtime generator of the test methods',
     long_description=get_readme(),
-    version=get_version(),
+    version=VERSION,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
