@@ -13,14 +13,16 @@ from setuptools import setup
 
 PACKAGE_NAME = 'tcm'
 
-LONG_DESCRIPTION = '''
-    This is primarily an excercise in Python metaprogramming
-    which also lets me see github and CI tools in action.
-    '''
-
 
 if sys.version_info < (3, 4):
     raise RuntimeError('ERROR: {} requires Python 3.4 or higher'.format(PACKAGE_NAME))
+
+
+def get_readme():
+    """Return the contents of the package's README.rst file."""
+    with open('README.rst') as readme_file:
+        text = readme_file.read()
+    return text
 
 
 def get_version():
@@ -41,7 +43,7 @@ setup(
     license='MIT',
     platforms='All',
     description='Metaclass based runtime generator of the test methods',
-    long_description=LONG_DESCRIPTION,
+    long_description=get_readme(),
     version=get_version(),
     classifiers=[
         'Development Status :: 4 - Beta',

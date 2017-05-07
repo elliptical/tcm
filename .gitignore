@@ -11,7 +11,8 @@ __pycache__/
 /htmlcov/
 /.coverage
 
-# Distribution related directories.
+# Distribution related files and directories.
 /build/
 /dist/
 /*.egg-info/
+/README.rst
