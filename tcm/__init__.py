@@ -3,9 +3,7 @@
 
 import unittest
 
-from .decorator import ATTR_NAME            # noqa: F401
 from .decorator import DecoratorException   # noqa: F401
-from .decorator import TEST_METHOD_PREFIX   # noqa: F401
 from .decorator import values               # noqa: F401
 
 from .metaclass import MetaclassException   # noqa: F401
