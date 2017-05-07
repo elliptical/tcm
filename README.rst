@@ -17,7 +17,7 @@ Tools to use:
 -  tox to test the code with different Python versions
 -  pylint and flake8 to keep individual commits clean
 
-.. |version| image:: https://img.shields.io/badge/version-0.0.1-blue.svg
+.. |version| image:: https://img.shields.io/badge/version-0.1.0-blue.svg
    :target: ./CHANGELOG.md
 .. |license| image:: https://img.shields.io/badge/license-MIT-blue.svg
    :target: ./LICENSE.md

@@ -1,7 +1,7 @@
 """This package provides a framework for generating test methods at runtime."""
 
 
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 
 
 import unittest
