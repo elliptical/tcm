@@ -1,6 +1,9 @@
 """This package provides a framework for generating test methods at runtime."""
 
 
+__version__ = '0.0.1'
+
+
 import unittest
 
 from .decorator import DecoratorException   # noqa: F401
