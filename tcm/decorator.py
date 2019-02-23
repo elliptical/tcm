@@ -11,8 +11,6 @@ TEST_METHOD_PREFIX = 'test'
 class DecoratorException(Exception):
     """Exception raised on invalid use of the "values" decorator."""
 
-    pass
-
 
 class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-methods
     """Parameterized decorator which stores its arguments in the decorated object."""

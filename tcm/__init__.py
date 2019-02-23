@@ -15,5 +15,3 @@ from .metaclass import TestCaseMeta
 
 class TestCase(unittest.TestCase, metaclass=TestCaseMeta):
     """Base class to automatically employ the TestCaseMeta metaclass."""
-
-    pass
