@@ -8,7 +8,6 @@ import unittest
 
 from .decorator import DecoratorException   # noqa: F401
 from .decorator import values               # noqa: F401
-
 from .metaclass import MetaclassException   # noqa: F401
 from .metaclass import TestCaseMeta
 
