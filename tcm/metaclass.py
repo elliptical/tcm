@@ -98,9 +98,5 @@ def _generate_test_method(func, arg, as_is):
 
 def _get_starting_line_number(func):
     """Return the starting line number of the test method definition."""
-    # Python 3.4 version of getsourcelines() will return the source of the
-    # wrapper instead of the wrapped, so we unwrap it first (this is what
-    # Python 3.5 and higher do).
-    func = inspect.unwrap(func)
     _, start_line_number = inspect.getsourcelines(func)
     return start_line_number
