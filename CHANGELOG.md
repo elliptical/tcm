@@ -10,13 +10,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.0.0] - 2019-02-23
 ### Added
-- Python 3.7 is now supported.
+- `Python 3.7` is now supported.
 
 ### Removed
-- Python 3.4 is no longer supported.
+- `Python 3.4` is no longer supported.
 
 ## 0.1.0 - 2017-05-07
-- Initial release
+- Initial release.
 
 [Unreleased]: https://github.com/elliptical/tcm/compare/1.0.0...HEAD
 [1.0.0]: https://github.com/elliptical/tcm/compare/0.1.0...1.0.0
