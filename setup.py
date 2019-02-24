@@ -15,8 +15,8 @@ PACKAGE_NAME = 'tcm'
 BADGE_LINE = '|version| |license| |Build Status| |Coverage Status|\n\n'
 
 
-if sys.version_info < (3, 4):
-    raise RuntimeError('ERROR: {} requires Python 3.4 or higher'.format(PACKAGE_NAME))
+if sys.version_info < (3, 5):
+    raise RuntimeError('{} requires Python 3.5 or higher'.format(PACKAGE_NAME))
 
 
 def get_readme():
@@ -44,23 +44,23 @@ setup(
     name=PACKAGE_NAME,
     author='Andrei Boulgakov',
     author_email='andrei.boulgakov@outlook.com',
-    url='https://github.com/elliptical/tcm',
-    download_url='https://github.com/elliptical/tcm/archive/%s.tar.gz' % VERSION,
+    url='https://github.com/elliptical/{}'.format(PACKAGE_NAME),
+    download_url='https://github.com/elliptical/{}/archive/{}.tar.gz'.format(PACKAGE_NAME, VERSION),
     license='MIT',
     platforms='All',
     description='Metaclass based runtime generator of the test methods',
     long_description=get_readme(),
     version=VERSION,
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Software Development :: Testing',
     ],
@@ -70,7 +70,7 @@ setup(
         'unittest',
         'metaclass',
     ],
-    python_requires='>=3.4',
+    python_requires='>=3.5',
     packages=[PACKAGE_NAME],
     zip_safe=True,
 )

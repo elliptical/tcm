@@ -11,20 +11,18 @@ from .decorator import extract_captured_arguments
 class MetaclassException(Exception):
     """Exception raised on errors when generating test methods."""
 
-    pass
-
 
 class TestCaseMeta(type):
     """Metaclass based runtime generator of the test methods."""
 
     @classmethod
-    def __prepare__(mcs, name, bases, **kwargs):  # noqa: N804 pylint: disable=unused-argument
+    def __prepare__(cls, name, bases, **kwargs):  # noqa: N804 pylint: disable=unused-argument
         """Use ordered mapping for the namespace regardless of the Python version."""
         # Note: absent the __prepare__() method, Python 3.6 would use an ordered
         # mapping while prior versions would stick with a regular dict().
         return OrderedDict()
 
-    def __new__(mcs, name, bases, mapping):  # noqa: N804
+    def __new__(cls, name, bases, mapping):  # noqa: N804
         """Create the class after expanding the original mapping."""
         new_mapping = dict()
         for key, value in _expanded_mapping(mapping):
@@ -34,7 +32,7 @@ class TestCaseMeta(type):
                 raise MetaclassException(
                     'Duplicate "{}" attribute at lines {} and {}'.format(key, existing, current))
             new_mapping[key] = value
-        return super().__new__(mcs, name, bases, new_mapping)
+        return super().__new__(cls, name, bases, new_mapping)
 
 
 def _expanded_mapping(mapping):
@@ -100,9 +98,5 @@ def _generate_test_method(func, arg, as_is):
 
 def _get_starting_line_number(func):
     """Return the starting line number of the test method definition."""
-    # Python 3.4 version of getsourcelines() will return the source of the
-    # wrapper instead of the wrapped, so we unwrap it first (this is what
-    # Python 3.5 and higher do).
-    func = inspect.unwrap(func)
     _, start_line_number = inspect.getsourcelines(func)
     return start_line_number
