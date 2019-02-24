@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.0.1] - 2019-02-24
 ### Changed
 - `README.md` is now used instead of `README.rst` for PyPI uploads.
 
@@ -18,5 +20,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2017-05-07
 - Initial release.
 
-[Unreleased]: https://github.com/elliptical/tcm/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/elliptical/tcm/compare/1.0.1...HEAD
+[1.0.1]: https://github.com/elliptical/tcm/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/elliptical/tcm/compare/0.1.0...1.0.0
