@@ -12,7 +12,6 @@ from setuptools import setup
 
 
 PACKAGE_NAME = 'tcm'
-BADGE_LINE = '|version| |license| |Build Status| |Coverage Status|\n\n'
 
 
 if sys.version_info < (3, 5):
@@ -20,11 +19,10 @@ if sys.version_info < (3, 5):
 
 
 def get_readme():
-    """Return the contents of the package's README.rst file."""
-    with open('README.rst') as readme_file:
+    """Return the contents of the package's README.md file."""
+    with open('README.md') as readme_file:
         text = readme_file.read()
-    assert text.startswith(BADGE_LINE)
-    return text[len(BADGE_LINE):]
+    return text
 
 
 def get_version():
@@ -50,6 +48,7 @@ setup(
     platforms='All',
     description='Metaclass based runtime generator of the test methods',
     long_description=get_readme(),
+    long_description_content_type='text/markdown',
     version=VERSION,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
