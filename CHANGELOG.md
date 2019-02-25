@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- The packaged version of `README.md` no longer includes the badges row.
 
 ## [1.0.1] - 2019-02-24
 ### Changed

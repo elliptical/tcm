@@ -19,10 +19,11 @@ if sys.version_info < (3, 5):
 
 
 def get_readme():
-    """Return the contents of the package's README.md file."""
+    """Return the contents of the package's README.md file excluding the badges row."""
     with open('README.md') as readme_file:
         text = readme_file.read()
-    return text
+    h1_pos = text.index('\n#') + 1
+    return text[h1_pos:]
 
 
 def get_version():
