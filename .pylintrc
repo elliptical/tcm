@@ -1,5 +1,2 @@
-[MESSAGES CONTROL]
-disable = locally-disabled
-
 [FORMAT]
 max-line-length = 100
