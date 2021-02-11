@@ -4,7 +4,7 @@ Run "python setup.py install" to install the tcm package.
 """
 
 
-import os
+from os import path
 import re
 import sys
 
@@ -14,13 +14,13 @@ from setuptools import setup
 PACKAGE_NAME = 'tcm'
 
 
-if sys.version_info < (3, 5):
-    raise RuntimeError('{} requires Python 3.5 or higher'.format(PACKAGE_NAME))
+if sys.version_info < (3, 6):
+    raise RuntimeError(f'{PACKAGE_NAME} requires Python 3.6 or higher')
 
 
 def get_readme():
     """Return the contents of the package's README.md file excluding the badges row."""
-    with open('README.md') as readme_file:
+    with open_text_file('README.md') as readme_file:
         text = readme_file.read()
     h1_pos = text.index('\n#') + 1
     return text[h1_pos:]
@@ -28,12 +28,18 @@ def get_readme():
 
 def get_version():
     """Return the version string from the package's __init__.py file."""
-    with open(os.path.join(PACKAGE_NAME, '__init__.py')) as version_file:
+    with open_text_file(PACKAGE_NAME, '__init__.py') as version_file:
         version_source = version_file.read()
     version_match = re.search(r"^__version__ = '([^']*)'", version_source, re.MULTILINE)
     if not version_match:
         raise RuntimeError('Could not find the version string.')
     return version_match.group(1)
+
+
+def open_text_file(*path_segments):
+    """Open the specified UTF-8 encoded file relative to setup.py location."""
+    my_dir = path.abspath(path.dirname(__file__))
+    return open(path.join(my_dir, *path_segments), encoding='utf-8')
 
 
 VERSION = get_version()
@@ -43,8 +49,8 @@ setup(
     name=PACKAGE_NAME,
     author='Andrei Boulgakov',
     author_email='andrei.boulgakov@outlook.com',
-    url='https://github.com/elliptical/{}'.format(PACKAGE_NAME),
-    download_url='https://github.com/elliptical/{}/archive/{}.tar.gz'.format(PACKAGE_NAME, VERSION),
+    url=f'https://github.com/elliptical/{PACKAGE_NAME}',
+    download_url=f'https://github.com/elliptical/{PACKAGE_NAME}/archive/{VERSION}.tar.gz',
     license='MIT',
     platforms='All',
     description='Metaclass based runtime generator of the test methods',
@@ -58,19 +64,18 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Software Development :: Testing',
     ],
     keywords=[
-        'python',
-        'python3',
         'unittest',
         'metaclass',
     ],
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     packages=[PACKAGE_NAME],
     zip_safe=True,
 )
