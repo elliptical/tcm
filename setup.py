@@ -72,8 +72,6 @@ setup(
         'Topic :: Software Development :: Testing',
     ],
     keywords=[
-        'python',
-        'python3',
         'unittest',
         'metaclass',
     ],
