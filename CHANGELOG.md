@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Python 3.8` is now supported.
 - `Python 3.9` is now supported.
 
+### Removed
+- `Python 3.5` is no longer supported.
+
 ## [1.0.2] - 2019-02-24
 ### Changed
 - The packaged version of `README.md` no longer includes the badges row.

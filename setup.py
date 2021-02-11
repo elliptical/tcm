@@ -14,8 +14,8 @@ from setuptools import setup
 PACKAGE_NAME = 'tcm'
 
 
-if sys.version_info < (3, 5):
-    raise RuntimeError('{} requires Python 3.5 or higher'.format(PACKAGE_NAME))
+if sys.version_info < (3, 6):
+    raise RuntimeError('{} requires Python 3.6 or higher'.format(PACKAGE_NAME))
 
 
 def get_readme():
@@ -58,7 +58,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
@@ -72,7 +71,7 @@ setup(
         'unittest',
         'metaclass',
     ],
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     packages=[PACKAGE_NAME],
     zip_safe=True,
 )
