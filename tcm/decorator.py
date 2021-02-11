@@ -37,9 +37,8 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
         else:
             if isinstance(attr, _CapturedArguments):
                 raise DecoratorException('Cannot decorate the same object more than once')
-            else:
-                raise DecoratorException(
-                    'The object already has the "{}" attribute'.format(ATTR_NAME))
+            raise DecoratorException(
+                'The object already has the "{}" attribute'.format(ATTR_NAME))
 
         return func
 
