@@ -15,7 +15,7 @@ PACKAGE_NAME = 'tcm'
 
 
 if sys.version_info < (3, 6):
-    raise RuntimeError('{} requires Python 3.6 or higher'.format(PACKAGE_NAME))
+    raise RuntimeError(f'{PACKAGE_NAME} requires Python 3.6 or higher')
 
 
 def get_readme():
@@ -43,8 +43,8 @@ setup(
     name=PACKAGE_NAME,
     author='Andrei Boulgakov',
     author_email='andrei.boulgakov@outlook.com',
-    url='https://github.com/elliptical/{}'.format(PACKAGE_NAME),
-    download_url='https://github.com/elliptical/{}/archive/{}.tar.gz'.format(PACKAGE_NAME, VERSION),
+    url=f'https://github.com/elliptical/{PACKAGE_NAME}',
+    download_url=f'https://github.com/elliptical/{PACKAGE_NAME}/archive/{VERSION}.tar.gz',
     license='MIT',
     platforms='All',
     description='Metaclass based runtime generator of the test methods',

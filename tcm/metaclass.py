@@ -30,7 +30,7 @@ class TestCaseMeta(type):
                 existing = _get_starting_line_number(new_mapping[key])
                 current = _get_starting_line_number(value)
                 raise MetaclassException(
-                    'Duplicate "{}" attribute at lines {} and {}'.format(key, existing, current))
+                    f'Duplicate "{key}" attribute at lines {existing} and {current}')
             new_mapping[key] = value
         return super().__new__(cls, name, bases, new_mapping)
 
@@ -89,7 +89,7 @@ def _generate_test_method(func, arg, as_is):
         def _wrapper(self):
             return func(self, **arg)
     else:
-        raise MetaclassException('Invalid test arg: {!r}'.format(arg))
+        raise MetaclassException(f'Invalid test arg: {arg!r}')
 
     functools.update_wrapper(_wrapper, func)
 

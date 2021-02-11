@@ -27,8 +27,7 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
         if not callable(func):
             raise DecoratorException('The object must be callable')
         if not func.__name__.startswith(TEST_METHOD_PREFIX):
-            raise DecoratorException(
-                'The object name must start with "{}"'.format(TEST_METHOD_PREFIX))
+            raise DecoratorException(f'The object name must start with "{TEST_METHOD_PREFIX}"')
 
         try:
             attr = getattr(func, ATTR_NAME)
@@ -37,8 +36,7 @@ class values():  # noqa: N801 / pylint: disable=invalid-name,too-few-public-meth
         else:
             if isinstance(attr, _CapturedArguments):
                 raise DecoratorException('Cannot decorate the same object more than once')
-            raise DecoratorException(
-                'The object already has the "{}" attribute'.format(ATTR_NAME))
+            raise DecoratorException(f'The object already has the "{ATTR_NAME}" attribute')
 
         return func
 
