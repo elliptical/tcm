@@ -16,13 +16,13 @@ class TestCaseMeta(type):
     """Metaclass based runtime generator of the test methods."""
 
     @classmethod
-    def __prepare__(cls, name, bases, **kwargs):  # noqa: N804 pylint: disable=unused-argument
+    def __prepare__(cls, name, bases, **kwargs):  # pylint: disable=unused-argument
         """Use ordered mapping for the namespace regardless of the Python version."""
         # Note: absent the __prepare__() method, Python 3.6 would use an ordered
         # mapping while prior versions would stick with a regular dict().
         return OrderedDict()
 
-    def __new__(cls, name, bases, mapping):  # noqa: N804
+    def __new__(cls, name, bases, mapping):
         """Create the class after expanding the original mapping."""
         new_mapping = dict()
         for key, value in _expanded_mapping(mapping):
