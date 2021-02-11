@@ -21,10 +21,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - `Python 3.4` is no longer supported.
 
-## 0.1.0 - 2017-05-07
+## [0.1.0] - 2017-05-07
 - Initial release.
 
 [Unreleased]: https://github.com/elliptical/tcm/compare/1.0.2...HEAD
 [1.0.2]: https://github.com/elliptical/tcm/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/elliptical/tcm/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/elliptical/tcm/compare/0.1.0...1.0.0
+[0.1.0]: https://github.com/elliptical/tcm/releases/tag/0.1.0
