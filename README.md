@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/badge/version-1.0.2-blue.svg)](./CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-2.0.0-blue.svg)](./CHANGELOG.md)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Build Status](https://travis-ci.com/elliptical/tcm.svg)](https://travis-ci.com/elliptical/tcm)
 [![Coverage Status](https://coveralls.io/repos/github/elliptical/tcm/badge.svg?branch=develop)](https://coveralls.io/github/elliptical/tcm?branch=develop)
