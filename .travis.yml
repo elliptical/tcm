@@ -1,14 +1,15 @@
-dist: xenial
+dist: bionic
 language: python
-python: 3.7
+python: 3.9
 
 addons:
   apt:
     sources:
     - deadsnakes
     packages:
-    - python3.5
     - python3.6
+    - python3.7
+    - python3.8
 
 install:
 - pip install tox

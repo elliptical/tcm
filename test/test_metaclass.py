@@ -191,7 +191,7 @@ class MetaclassTestCase(unittest.TestCase):
             MetaclassTestCase.test_duplicate_test_method_name_will_raise)
         self.assertEqual(
             cm.exception.args[0],
-            'Duplicate "test_1" attribute at lines {} and {}'.format(base + 3, base + 7))
+            f'Duplicate "test_1" attribute at lines {base + 3} and {base + 7}')
 
         # Make sure _SpoiledTestCase does not exist.
         self.assertSetEqual(set(locals()), {'self', 'cm', '_source', 'base'})
